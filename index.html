@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+        .nums input {
+            margin: 12px;
+            width: 10rem;
+            text-align: center;
+        }
+
+        div {
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px
+        }
+
+        #target {
+            color: brown;
+            font-weight: bold;
+        }
+
+        div.result div {
+            background-color: rgb(218, 200, 156);
+
+        }
+
+        #start {
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sayı Ödevi</h1>
+    <div class="nums">
+        <h3>Hedef Sayı <input min="1" max="9" type="number" id="target" placeholder="Hedef Sayı"></h3>
+        <input min="1" max="9" type="number" id="sayi1" placeholder="Sayı 1(Tek haneli)">
+        <input min="1" max="9" type="number" id="sayi2" placeholder="Sayı 2(Tek haneli)">
+        <input min="1" max="9" type="number" id="sayi3" placeholder="Sayı 3(Tek haneli)">
+        <input min="1" max="9" type="number" id="sayi4" placeholder="Sayı 4(Tek haneli)">
+        <input min="1" max="9" type="number" id="sayi5" placeholder="Sayı 5(Tek haneli)">
+        <input min="10" max="99" type="number" id="sayi6" step="10" placeholder="Sayı 6(Çift haneli)">
+        <button type="button" id="rastgeleolustur" class="btn btn-secondary ">Rastgele Sayılar Oluştur</button>
+    </div>
+    <div>
+        <button type="button" id="start" class="btn btn-primary ">Hesaplamaya Başla!</button>
+    </div>
+    <div class="row">
+        <div class="col-6 result">
+            
+        </div>
+        <div class="col-6 end">
+
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="sweetalert2.all.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+			var denendi =0;
+            var endusukdiff = [1000, ""];
+            var arraynums = [];
+            var target;
+            var haystack = ["5", "6", "7", "8", "9", "0"];
+
+            $("#rastgeleolustur").click(function () {
+                arraynums = []
+                for (i = 1; i <= 5; i++) {
+                    while (1) {
+                        var randomTamSayi = Math.floor(Math.random() * 9 + 1);
+                        if (jQuery.inArray(randomTamSayi, arraynums) == -1) {
+                            arraynums.push(randomTamSayi);
+                            $("#sayi" + i).val(randomTamSayi);
+                            break;
+                        }
+                    }
+                }
+
+                randomTamSayi = Math.floor((Math.random() * 9 + 1)) * 10;
+                arraynums.push(randomTamSayi);
+                $("#sayi6").val(randomTamSayi);
+                targetrandom = Math.floor((Math.random() * 900 + 100))
+                $("#target").val(targetrandom);
+
+
+
+            });
+
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+
+            $("#start").click(async function () {/// async komutu wait için gerekli o yüzden kullandım
+                const permutations = array => {
+                    let permut = [];
+                    helperFunction(0, array, permut);
+                    return permut;
+                };
+
+                const helperFunction = (i, array, permut) => {
+                    if (i === array.length - 1) {
+                        permut.push(array.slice());
+                    } else {
+                        for (let j = i; j < array.length; j++) {
+                            swapElements(i, j, array);
+                            helperFunction(i + 1, array, permut);
+                            swapElements(i, j, array);
+                        }
+                    }
+                };
+
+                function swapElements(a, b, array) {
+                    let temp = array[a];
+                    array[a] = array[b];
+                    array[b] = temp;
+                }
+
+                var sayilar = [];
+                sayilar.push(parseInt(document.getElementById("sayi1").value));
+                sayilar.push(parseInt(document.getElementById("sayi2").value));
+                sayilar.push(parseInt(document.getElementById("sayi3").value));
+                sayilar.push(parseInt(document.getElementById("sayi4").value));
+                sayilar.push(parseInt(document.getElementById("sayi5").value));
+                sayilar.push(parseInt(document.getElementById("sayi6").value));
+                target = parseInt(document.getElementById("target").value);
+                console.log(sayilar);
+                console.log(target);
+                var permutated = permutations(sayilar);
+                console.log("For uzunluğu " + permutated.length);
+                $(".end").html("");
+                $(".result").html("");
+                for (i = 0; i < permutated.length; i++) {
+
+
+
+                    for (j = 11111; j <= 44444; j++) {
+                        stringi = j.toString();
+                        if ($.arrayIntersect(haystack, stringi).length == 0) {
+                            var html = "";
+                            html += permutated[i][0] + charConvertToOperation(stringi[0]) +
+                                permutated[i][1] + charConvertToOperation(stringi[1]) +
+                                permutated[i][2] + charConvertToOperation(stringi[2]) +
+                                permutated[i][3] + charConvertToOperation(stringi[3]) +
+                                permutated[i][4] + charConvertToOperation(stringi[4]) +
+                                permutated[i][5];
+
+                            html += " = " + Calculate(permutated[i], stringi);
+                            diff = Math.abs(target - Calculate(permutated[i], stringi));
+                            html += " Hedefe +- " + diff;
+                            await sleep(0);
+                            $(".result").html("<div>" + html + "</div>");
+							denendi++;
+							
+                            if (diff < endusukdiff[0]) {
+								$(".end").prepend("<div>" + html + "</div>");
+                                endusukdiff[0] = diff;
+                                endusukdiff[1] = html;
+								console.log(endusukdiff);
+                                if (diff <= 1.00) {
+								console.log('girdi');
+                                    i += 720;
+                                    break;
+
+                                }
+                            }
+
+
+                        }
+
+                    }
+
+
+
+                }
+
+                Swal.fire({
+                    type: 'success',
+                    title: endusukdiff[1],
+                    showConfirmButton: true,
+
+                });
+
+
+
+
+
+
+            });
+
+
+
+            $.arrayIntersect = function (a, b) {
+                return $.grep(a, function (i) {
+                    return $.inArray(i, b) > -1;
+                });
+            };
+
+
+
+            function charConvertToOperation(char) {
+                switch (char) {
+                    case "1":
+                        return "+";
+                    case "2":
+                        return "-";
+                    case "3":
+                        return "*";
+                    case "4":
+                        return "/";
+                }
+            }
+
+            function Calculate(nums, key) {
+                var tempnums = nums.slice();
+                var total = tempnums[0];
+                tempnums.splice(0, 1);
+
+                $.each(tempnums, function (index, value) {
+
+                    switch (key[index]) {
+                        case "1":
+                            total += value;
+                            break;
+                        case "2":
+                            total -= value;
+                            break;
+                        case "3":
+                            total *= value;
+                            break;
+                        case "4":
+                            total /= value;
+                            break;
+                    }
+
+
+
+                });
+                return total.toFixed(2);
+            }
+
+
+        });
+    </script>
+
+</body>
+
+</html>
